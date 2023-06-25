@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div id="table"></div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script>
+      new gridjs.Grid({
+        columns: [
+          { id: "id", name: "ID"},
+          { id: "fullname", name: "Name"},
+          { id: "email", name: "Email"},
+          { id: "is_active", name: "Is Active",
+            formatter: (cell) => cell.toString()},],
+
+        pagination: true,
+
+        server: {
+          url: "/users/data",
+          then: results => results.data,
+          total: results => results.total,
+        },
+
+
+      }).render(document.getElementById("table"));
+
+    </script>
+    
+{% endblock %}
