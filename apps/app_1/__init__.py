@@ -3,6 +3,7 @@ from flask import Flask
 from .routes.users_bp import users_bp
 from .routes.default_bp import default_bp
 from .controllers.default_controller import DefaultController
+from .services.login_manager import login_manager
 
 
 app = Flask(__name__,
@@ -11,10 +12,6 @@ app = Flask(__name__,
 # Configuración de la app
 app.config.from_pyfile(filename="config.py")
 app_name = app.config["APP_NAME"]
-app.config['JSON_AS_ASCII'] = False
-
-welcome = text2art(app_name)
-print(welcome)
 
 # Register BluePrints
 app.register_blueprint(default_bp, url_prefix="/")
@@ -24,3 +21,9 @@ app.register_blueprint(users_bp, url_prefix="/users")
 app.register_error_handler(404, DefaultController.page_not_found)
 app.register_error_handler(500, DefaultController.server_error)
 
+# Inicialización de servicios
+login_manager.init_app(app)
+
+# Print de inicio
+welcome = text2art(app_name)
+print(welcome)

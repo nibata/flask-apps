@@ -1,9 +1,10 @@
+from typing import Dict
 from flask import render_template
 import requests
 import os
 
 
-class UserController:
+class UsersController:
     def __init__(self):
         self.url_base = os.environ.get("DB_API_URL")
 
@@ -20,3 +21,10 @@ class UserController:
         }
 
         return rtn
+
+    def get_user_by_id(self, user_id: str) -> Dict:
+        url = f"{self.url_base}/users/q?user_id={user_id}"
+        response = requests.get(url)
+        response_json = response.json()
+
+        return response_json
