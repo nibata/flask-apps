@@ -1,4 +1,5 @@
 from flask import render_template
+from ..auth.users import User
 
 
 class DefaultController:
@@ -7,7 +8,6 @@ class DefaultController:
 
     def index(self):
         self.current_app.logger.info("HELLO WORLD!!!")
-
         return render_template('views/default/index.html')
 
     @staticmethod

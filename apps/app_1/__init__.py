@@ -1,5 +1,8 @@
 from art import text2art
 from flask import Flask
+
+from .routes.login_bp import login_bp
+
 from .routes.users_bp import users_bp
 from .routes.default_bp import default_bp
 from .controllers.default_controller import DefaultController
@@ -16,6 +19,7 @@ app_name = app.config["APP_NAME"]
 # Register BluePrints
 app.register_blueprint(default_bp, url_prefix="/")
 app.register_blueprint(users_bp, url_prefix="/users")
+app.register_blueprint(login_bp, url_prefix="/auth")
 
 # Error pages
 app.register_error_handler(404, DefaultController.page_not_found)
@@ -23,6 +27,7 @@ app.register_error_handler(500, DefaultController.server_error)
 
 # Inicialización de servicios
 login_manager.init_app(app)
+login_manager.login_view = "/auth/login"
 
 # Print de inicio
 welcome = text2art(app_name)
