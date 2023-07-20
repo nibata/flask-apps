@@ -32,10 +32,6 @@ class User:
         return False
 
     @property
-    def get_id(self) -> str:
-        return self._token
-
-    @property
     def roles_list(self):
         return self._roles
 
@@ -46,4 +42,9 @@ class User:
     @property
     def user_email(self) -> str:
         return self._user_mail
+
+    def get_id(self) -> str:
+        return self._token
+
+
 
