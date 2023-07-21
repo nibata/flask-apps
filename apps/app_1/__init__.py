@@ -7,6 +7,7 @@ from .routes.users_bp import users_bp
 from .routes.default_bp import default_bp
 from .controllers.default_controller import DefaultController
 from .services.login_manager import login_manager
+from .services.translate import babel, get_locale
 
 
 app = Flask(__name__,
@@ -26,8 +27,12 @@ app.register_error_handler(404, DefaultController.page_not_found)
 app.register_error_handler(500, DefaultController.server_error)
 
 # Inicialización de servicios
+## login mananger
 login_manager.init_app(app)
 login_manager.login_view = "/auth/login"
+
+## translate
+babel.init_app(app=app, locale_selector=get_locale)
 
 # Print de inicio
 welcome = text2art(app_name)

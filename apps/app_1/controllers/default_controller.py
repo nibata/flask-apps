@@ -1,5 +1,7 @@
 from flask import render_template
 from ..auth.users import User
+from ..services.translate import format_date, gettext
+from datetime import date
 
 
 class DefaultController:
@@ -8,7 +10,16 @@ class DefaultController:
 
     def index(self):
         self.current_app.logger.info("HELLO WORLD!!!")
-        return render_template('views/default/index.html')
+
+        d = date(2022, 11, 24)
+        formated_date = format_date(d)
+
+        word = gettext("word")
+        hello = gettext("hello")
+        world = gettext("world")
+
+        return render_template('views/default/index.html', formated_date=formated_date, word=word, hello=hello,
+                               world=world)
 
     @staticmethod
     def page_not_found(e):
