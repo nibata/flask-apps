@@ -1,6 +1,5 @@
-from flask import render_template
-from ..auth.users import User
 from ..services.translate import format_date, gettext
+from flask import render_template
 from datetime import date
 
 

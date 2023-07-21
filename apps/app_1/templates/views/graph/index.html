@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Plotly Bar Example</h1>
+    <h2>filter:</h2>
+    <input type="text" id="fname" name="fname" class="form-control" onChange="callback(this.value)"/>
+    <div id="chart" class="chart"></div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
+    <script>
+      function callback(selection){
+        $.getJSON({
+          url: "/graph/callback_graph_data" , data: {"a_filter": selection}, success: function(result){
+            Plotly.newPlot("chart", result, {});
+          }
+        })
+      }
+    </script>
+
+    <script type='text/javascript'>
+      var graphs = {{ graphJSON | safe }};
+      Plotly.newPlot('chart',graphs,{});
+    </script>
+{% endblock %}
