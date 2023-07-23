@@ -4,6 +4,7 @@ from flask import Flask
 from .routes.login_bp import login_bp
 from .routes.users_bp import users_bp
 from .routes.graph_bp import graph_bp
+from .routes.table_bp import tables_bp
 from .routes.default_bp import default_bp
 
 from .controllers.default_controller import DefaultController
@@ -24,6 +25,7 @@ app.register_blueprint(default_bp, url_prefix="/")
 app.register_blueprint(users_bp, url_prefix="/users")
 app.register_blueprint(login_bp, url_prefix="/auth")
 app.register_blueprint(graph_bp, url_prefix="/graph")
+app.register_blueprint(tables_bp, url_prefix="/tables")
 
 # Error pages
 app.register_error_handler(404, DefaultController.page_not_found)
