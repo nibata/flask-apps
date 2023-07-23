@@ -30,6 +30,10 @@ class GraphBarData:
 
         self._axis_y = value
 
+    def update_data_graph(self, data: json):
+        aux_df = pd.DataFrame(data)
+        self._df_data = aux_df
+
     def get_filtered_graph(self, **filters):
         """
         Obtiene el objeto json que se utiliza por plotly para graficar datos. Para que este método funcione asume que
