@@ -8,9 +8,6 @@ class TableToShow:
     """
     Esta Clase permite que los datos provenientes de un formato json sencillo (sin estilo tabla, es decir filas y
     columnas simples) sea entregado en un formato compatible con GridJS
-
-    TODO: al ordenar hay que darse cuenta si es número o string. (se podría agregar un un indicador que diga si una
-          columna se quiere ordenar como str o int)
     """
     def __init__(self,
                  data: json, columns_alias: Dict = None,
@@ -22,7 +19,6 @@ class TableToShow:
         self._sorteable_columns = sorteables_columns
         self._df_data = pd.DataFrame(data)
         self._df_data.rename(columns=self._columns_alias, inplace=True)
-        self._df_data = self._df_data.applymap(str)
 
     @property
     def columns_alias(self):
@@ -53,6 +49,15 @@ class TableToShow:
         aux_df.rename(columns=self._columns_alias, inplace=True)
         self._df_data = aux_df
 
+    def get_data_columns_config_to_display(self):
+        rtn = []
+        for v in self._df_data.columns.tolist():
+            sorteable = v in self._sorteable_columns
+            rtn.append({"id": v, "name": v, "sort": sorteable})
+
+        rtn = json.dumps(rtn)
+        return rtn
+
     def display_data(self) -> Dict:
         """
         De los datos entregados en el constructor, obtiene del request los argumentos:
@@ -74,13 +79,13 @@ class TableToShow:
 
         # SEARCH
         default_df_filter = [True] * len(self._df_data)
-
         df_filter = None
+
         if search:
             df_filter = [False] * len(self._df_data)
             if self._columns_to_filter is not None:
                 for v in self._columns_to_filter:
-                    df_filter = df_filter | (self._df_data[v].str.contains(search))
+                    df_filter = df_filter | (self._df_data[v].astype(str).str.contains(search))
 
         if df_filter is not None:
             aux_df = self._df_data[df_filter]
