@@ -38,5 +38,5 @@ login_manager.login_view = "/auth/login"
 babel.init_app(app=app, locale_selector=get_locale)
 
 # Print de inicio
-welcome = text2art(app_name)
-print(welcome)
+print(text2art("Welcome to"))
+print(text2art(app_name))
