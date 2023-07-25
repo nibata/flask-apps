@@ -49,11 +49,36 @@ class TableToShow:
         aux_df.rename(columns=self._columns_alias, inplace=True)
         self._df_data = aux_df
 
-    def get_data_columns_config_to_display(self):
+    def get_data_columns_config_to_display(self, **extras) -> json:
+        """
+        Entrega en formato JSON la configuración básica para las columnas de la tabla a desplegar por GridJS
+
+        Parameters
+        ----------
+        extras
+            Configuraciones extras aceptadas por GridJS (no se verifica que sean válidas, solamente se entregan en
+            formato aceptado por GridJS)
+            name: nombre de la columna
+            value: Dict:
+                    name: nombre del argumento GridJS
+                    value: valor aceptado por GridJS
+
+        Returns
+        -------
+        JSON
+            Configuración de columnas en formato json
+        """
+
         rtn = []
         for v in self._df_data.columns.tolist():
             sorteable = v in self._sorteable_columns
-            rtn.append({"id": v, "name": v, "sort": sorteable})
+            aux_column_config = {"id": v, "name": v, "sort": sorteable}
+
+            extra_config = extras.get(v, None)
+            if extra_config:
+                aux_column_config.update(extra_config)
+
+            rtn.append(aux_column_config)
 
         rtn = json.dumps(rtn)
         return rtn
