@@ -1,5 +1,5 @@
 from art import text2art
-from flask import Flask, session
+from flask import Flask, url_for
 
 from datetime import timedelta
 

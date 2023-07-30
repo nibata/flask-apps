@@ -17,11 +17,11 @@ class TableController:
     def index(self):
         columns_to_filter = self._table.columns_to_filter
         columns_to_sort = self._table.sorteable_columns
-        columns_name = self._table.get_data_columns_config_to_display()
+        columns = self._table.get_data_columns_config_to_display()
 
         return render_template('views/table/index.html',
                                title="Table Example",
-                               columns_name=columns_name,
+                               columns=columns,
                                columns_to_filter=columns_to_filter,
                                columns_to_sort=columns_to_sort)
 

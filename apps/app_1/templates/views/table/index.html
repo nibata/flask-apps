@@ -14,7 +14,7 @@
             return prev + (prev.indexOf('?') >= 0 ? '&' : '?') + new URLSearchParams(query).toString();
         };
         new gridjs.Grid({
-            columns: {{ columns_name|safe }},
+            columns: {{ columns|safe }},
 
             server: {
                 url: "/tables/data",

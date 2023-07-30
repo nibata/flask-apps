@@ -12,13 +12,15 @@ class TableToShow:
     def __init__(self,
                  data: json, columns_alias: Dict = None,
                  columns_to_filter: List = None,
-                 sorteables_columns: List = None):
+                 sorteables_columns: List = None,
+                 actions: Dict = None):
 
         self._columns_to_filter = columns_to_filter
         self._columns_alias = columns_alias
         self._sorteable_columns = sorteables_columns
         self._df_data = pd.DataFrame(data)
         self._df_data.rename(columns=self._columns_alias, inplace=True)
+        self._actions = actions
 
     @property
     def columns_alias(self):
