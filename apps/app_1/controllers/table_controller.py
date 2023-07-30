@@ -6,7 +6,7 @@ import json
 class TableController:
     def __init__(self, current_app):
         self.current_app = current_app
-        self._test = {'A': ["a1", "b2", "c3", "d4", "e5", "f6", "g7", "h8", "i9", "j10", "k11", "l12"],
+        self._test = {"A": ["a1", "b2", "c3", "d4", "e5", "f6", "g7", "h8", "i9", "j10", "k11", "l12"],
                       "B": [12, 14, 26, 45, 24, 76, 43, 26, 98, 23, 45, 86],
                       "C": [142, 142, 264, 455, 264, 776, 743, 626, 598, 345, 234, 980]}
         self._table = TableToShow(data=self._test,
@@ -17,13 +17,19 @@ class TableController:
     def index(self):
         columns_to_filter = self._table.columns_to_filter
         columns_to_sort = self._table.sorteable_columns
-        columns = self._table.get_data_columns_config_to_display()
+        columns = self._table.get_default_data_columns_config_to_display()
 
         return render_template('views/table/index.html',
                                title="Table Example",
                                columns=columns,
                                columns_to_filter=columns_to_filter,
                                columns_to_sort=columns_to_sort)
+
+    def manual_conf(self):
+        columns_to_sort = self._table.sorteable_columns
+
+        return render_template('views/table/manual_conf.html',
+                               title="Table Example. Manually configured columns")
 
     def data(self):
         rtn = self._table.display_data()

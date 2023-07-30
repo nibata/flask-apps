@@ -7,4 +7,6 @@ table_controller = TableController(current_app=current_app)
 
 tables_bp.route("/", methods=["GET"])(table_controller.index)
 
+tables_bp.route("/manual_conf", methods=["GET"])(table_controller.manual_conf)
+
 tables_bp.route("/data", methods=["GET"])(table_controller.data)

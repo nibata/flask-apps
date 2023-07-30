@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div id="table"></div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script>
+        const updateUrl = (prev, query) => {
+            var search_text_aux = prev.substring(prev.indexOf('search='), prev.indexOf('&'));
+            var search_text = (search_text_aux == "/tables" ? "" : "?" + search_text_aux)
+            return prev + (prev.indexOf('?') >= 0 ? '&' : '?') + new URLSearchParams(query).toString();
+        };
+        new gridjs.Grid({
+            columns: [
+                {id: "Column A", name:"Columna A"},
+                {id: "B", name: "B"},
+                {id: "C", name: "Action", sort: false, formatter: (cell, row) => {
+                    return gridjs.html("<a id='edit_user_form' href='" + cell + "/edit' class='btn btn-primary btn-sm' role='button'> Edit </a>");
+            }, width: "9%"},
+            ],
+
+            server: {
+                url: "/tables/data",
+                then: results => results.data,
+                total: results => results.total,
+            },
+            pagination: {
+                enabled: true,
+                server: {
+                    url: (prev, page, limit) => {
+                        return updateUrl(prev, {start: page * limit, length: limit});
+                    },
+                },
+            },
+
+
+        }).render(document.getElementById("table"));
+
+    </script>
+    
+{% endblock %}
