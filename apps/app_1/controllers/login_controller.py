@@ -32,12 +32,11 @@ def login():
             if "access_token" in response:
                 user = User(response["access_token"])
                 login_user(user)
-
                 flash('Welcome', category="success")
-
                 session.permanent = True
 
                 return redirect(url_for("default_bp.index"))
+
             else:
                 flash("The password or the email are wrong. Please try again.", category="danger")
 
