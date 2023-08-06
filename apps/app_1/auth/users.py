@@ -16,8 +16,11 @@ class User:
         self._roles = _decoded_jwt["roles"]
 
         _url = f"{_url_base}/users/q?user_email={self._user_mail}"
-        _response = requests.get(_url)
-        self._response_json = _response.json()
+        _response = requests.get(_url).json()
+
+        self._is_active = _response["IsActive"]
+        self._fullname = _response["FullName"]
+
 
     @property
     def is_authenticated(self) -> bool:
@@ -25,7 +28,7 @@ class User:
 
     @property
     def is_active(self) -> bool:
-        return self._response_json["is_active"]
+        return self._is_active
 
     @property
     def is_anonymous(self) -> bool:
@@ -37,7 +40,7 @@ class User:
 
     @property
     def fullname(self) -> str:
-        return self._response_json["fullname"]
+        return self._fullname
 
     @property
     def user_email(self) -> str:

@@ -23,8 +23,8 @@ def login():
             password = form.password.data
 
             json_token = {
-                "email": email,
-                "password": password
+                "Email": email,
+                "Password": password
             }
 
             response = requests.post(f"{url_base}/user/login", json=json_token).json()
