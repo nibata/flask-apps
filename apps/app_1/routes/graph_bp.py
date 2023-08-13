@@ -1,5 +1,5 @@
-from flask import Blueprint, current_app
 from ..controllers.graph_controller import GraphController
+from flask import Blueprint, current_app
 
 graph_bp = Blueprint("graph_bp", __name__)
 graph_controller = GraphController(current_app=current_app)

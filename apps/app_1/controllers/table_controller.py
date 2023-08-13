@@ -1,6 +1,5 @@
 from ..modules.table_module import TableToShow
 from flask import render_template
-import json
 
 
 class TableController:

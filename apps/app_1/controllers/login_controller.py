@@ -1,10 +1,10 @@
-import os
-import requests
-from ..auth.users import User
-from ..forms.authentication_form import LoginForm
-from ..services.login_manager import login_manager
-from flask_login import login_user, logout_user, current_user
 from flask import render_template, redirect, url_for, flash, session
+from flask_login import login_user, logout_user, current_user
+from ..services.login_manager import login_manager
+from ..forms.authentication_form import LoginForm
+from ..auth.users import User
+import requests
+import os
 
 
 @login_manager.user_loader

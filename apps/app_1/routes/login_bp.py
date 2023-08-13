@@ -1,5 +1,5 @@
-from flask import Blueprint
 from ..controllers.login_controller import login, logout
+from flask import Blueprint
 
 login_bp = Blueprint("login_bp", __name__)
 

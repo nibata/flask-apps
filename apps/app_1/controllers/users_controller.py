@@ -1,9 +1,9 @@
-from typing import Dict
 from flask import render_template
+from typing import Dict
 import requests
 import os
 
-
+# TODO: revisar porque no se despliega index
 class UsersController:
     def __init__(self):
         self.url_base = os.environ.get("DB_API_URL")

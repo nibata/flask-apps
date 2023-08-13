@@ -1,5 +1,5 @@
-from flask import Blueprint, current_app
 from ..controllers.default_controller import DefaultController
+from flask import Blueprint, current_app
 
 default_bp = Blueprint("default_bp", __name__)
 

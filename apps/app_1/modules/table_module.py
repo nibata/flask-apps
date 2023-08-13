@@ -10,15 +10,31 @@ class TableToShow:
     columnas simples) sea entregado en un formato compatible con GridJS
     """
     def __init__(self,
-                 data: json, columns_alias: Dict = None,
+                 data: json,
+                 columns_alias: Dict = None,
                  columns_to_filter: List = None,
-                 sorteables_columns: List = None):
+                 sorteables_columns: List = None,
+                 columns_order: List = None):
 
         self._columns_to_filter = columns_to_filter
         self._columns_alias = columns_alias
         self._sorteable_columns = sorteables_columns
+        self._columns_order = columns_order
         self._df_data = pd.DataFrame(data)
-        self._df_data.rename(columns=self._columns_alias, inplace=True)
+
+        if self._columns_alias:
+            self._df_data.rename(columns=self._columns_alias, inplace=True)
+
+        if self._columns_order:
+            self._df_data = self._df_data[self._columns_order]
+
+        if self._sorteable_columns:
+            aux = []
+            for col in self._df_data.columns.tolist():
+                if col in self._sorteable_columns:
+                    aux.append(col)
+                else:
+                    aux.append("")
 
     @property
     def columns_alias(self):
@@ -42,7 +58,21 @@ class TableToShow:
 
     @sorteable_columns.setter
     def sorteable_columns(self, value: List):
-        self._sorteable_columns = value
+        aux = []
+        for col in self._df_data.columns.tolist():
+            if col in value:
+                aux.append(col)
+            else:
+                aux.append("")
+
+    @property
+    def columns_order(self):
+        return self._columns_order
+
+    @columns_order.setter
+    def columns_order(self, value: List):
+        self._columns_order = value
+        self._df_data = self._df_data[value]
 
     def update_data_table(self, data: json):
         aux_df = pd.DataFrame(data)
@@ -133,7 +163,7 @@ class TableToShow:
 
         # PAGINATION
         if start != -1 and length != -1:
-            end = length * (start + 1)
+            end = length + start
             aux_df = aux_df.iloc[start:end]
 
         total = len(self._df_data)

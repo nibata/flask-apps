@@ -1,5 +1,5 @@
-from flask import Blueprint, current_app
 from ..controllers.table_controller import TableController
+from flask import Blueprint, current_app
 
 tables_bp = Blueprint("tables_bp", __name__)
 
